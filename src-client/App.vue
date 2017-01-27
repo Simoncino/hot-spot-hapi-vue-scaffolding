@@ -1,23 +1,19 @@
 <template>
-  <div class="containerLogin">
+  <div class="containerApp">
     <h2>App.vue</h2>
     <img src="./assets/logo.png">
     <template v-if="showLogin">
       <Login v-on:logged="setUtente"></Login> 
     </template>
     <template v-else>
-      <h4>creare la home.vue</h4>
       <router-view></router-view>
-      <h4>PrintUtente</h4>
-      <pre>{{logUser}}</pre>
     </template>
   </div>
 </template>
 
 <script>
-  import SimpleList from './components/SimpleList.vue'
   import Login from './components/Login.vue'
-  import Streaming from './components/Posts/Streaming.vue'
+  import Home from './components/home/Home.vue'
 
   export default {
     created: function(){
@@ -30,9 +26,8 @@
       s_info: {}
     },
     components: {
-      SimpleList
-      ,Login
-      ,Streaming
+      Login
+      ,Home
     },
     data: function() {
       return {
@@ -48,7 +43,10 @@
          this.showLogin = false;
          this.logUser = user;
          this.s_info.loggedUser = user;
-         /*this.router.push('foo')*/
+         console.log('-----------------------PUNTO MALEDETTO')
+         this.$router.push('home');
+         console.log('-----------------------DOPO IL PUNTO MALEDETTO')
+         /*this.router.push({ path: 'home', params: { s_info: this.s_info }});*/
        }
 
      }
@@ -59,5 +57,9 @@
 <style lang="scss">
   body {
     font-family: Open Sans, sans-serif;
+  }
+
+  .containerApp{
+    text-align: center;
   }
 </style>

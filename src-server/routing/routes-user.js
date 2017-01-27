@@ -6,6 +6,7 @@ module.exports = [
 	handler: function (request, reply) {
 		const userReq = request.payload;
 		console.log('userReq',userReq);
+		
 		let result = {
 			success: false,
 			message: 'NON sei loggato COJONE!!!!!!'
@@ -13,22 +14,19 @@ module.exports = [
 
 		const users = require('./json_fake/userList.json');
 		let user = null;
-		for(let i = 0; i < users.length; i++){
-			if(userReq.username == users[i].username && userReq.password == users[i].password){
-				user = users[i];
-				break;
-			}
-		}
+
+		user = users.find(function(item){
+			return userReq.username == item.username && userReq.password == item.password;
+		});
 
 		console.log('trovato', user);
-		if(!user){
-			user = require('./json_fake/user.json');
-		}
-		user.random = Math.floor((Math.random() * 10) + 1);
 
-		result.success = true;
-		result.message = 'Loggato correttamente dio FROCIO';
-		result.user = user;
+		if(user){
+			user.random = Math.floor((Math.random() * 10) + 1);
+			result.success = true;
+			result.message = 'Loggato correttamente dio FROCIO';
+			result.user = user;
+		}	
 
 		reply(result);
 	} 
@@ -73,19 +71,14 @@ module.exports = [
 
 		const id = request.params.userid;
 
-		const users =  lista.filter(function(item){
+		let user =  lista.find(function(item){
 			return item.id == id;
 		});  
-
-		let item = {};
-		if(users && users.length){
-			item = users[0];
-		}
 
 		const result = {
 			success: true,
 			message: '',
-			item: item
+			item: user
 		};
 		reply(result);
 	}
