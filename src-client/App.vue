@@ -43,9 +43,7 @@
          this.showLogin = false;
          this.logUser = user;
          this.s_info.loggedUser = user;
-         console.log('-----------------------PUNTO MALEDETTO')
          this.$router.push('home');
-         console.log('-----------------------DOPO IL PUNTO MALEDETTO')
          /*this.router.push({ path: 'home', params: { s_info: this.s_info }});*/
        }
 
